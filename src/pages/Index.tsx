@@ -1,16 +1,453 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import heroMeat from "@/assets/hero-meat.jpg";
+import cattleFarm from "@/assets/cattle-farm.jpg";
+import logoRed from "@/assets/jb-carnes-logo-red.jpeg";
+import logoDark from "@/assets/jb-carnes-logo-dark.jpeg";
+import { useEffect, useRef, useState } from "react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+/* ────────────────────────────────────────────────
+   Intersection Observer hook for scroll animations
+──────────────────────────────────────────────── */
+function useInView(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, inView };
+}
+
+/* ────────────────────────────────────────────────
+   NAVBAR
+──────────────────────────────────────────────── */
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled ? "bg-brand-dark-brown/95 backdrop-blur-sm shadow-lg py-3" : "bg-transparent py-5"
+      }`}
+    >
+      <div className="container mx-auto flex items-center justify-between">
+        <img
+          src={logoDark}
+          alt="JB Carnes Atacadista"
+          className="h-12 w-auto object-contain rounded"
+        />
+        <div className="hidden md:flex items-center gap-8">
+          {[
+            { label: "Início", id: "hero" },
+            { label: "Sobre", id: "sobre" },
+            { label: "Serviços", id: "servicos" },
+            { label: "Contato", id: "contato" },
+          ].map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollTo(item.id)}
+              className="font-body text-brand-beige hover:text-brand-red transition-colors text-sm font-semibold tracking-wide uppercase"
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+        <a
+          href="https://wa.me/5565999999999"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:flex items-center gap-2 bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold text-sm px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-hero"
+        >
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          Fale Conosco
+        </a>
+      </div>
+    </nav>
   );
-};
+}
 
-const Index = PlaceholderIndex;
+/* ────────────────────────────────────────────────
+   HERO
+──────────────────────────────────────────────── */
+function Hero() {
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0">
+        <img
+          src={heroMeat}
+          alt="Carnes premium JB Carnes"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 gradient-hero" />
+      </div>
+
+      {/* Decorative line */}
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-brand-red opacity-60" />
+
+      <div className="container mx-auto relative z-10 pt-24">
+        <div className="max-w-3xl">
+          {/* Tag */}
+          <div className="inline-flex items-center gap-2 bg-brand-red/20 border border-brand-red/40 px-4 py-1.5 rounded-full mb-6 animate-fade-in">
+            <span className="w-2 h-2 rounded-full bg-brand-red block" />
+            <span className="text-brand-beige font-body text-xs font-semibold uppercase tracking-widest">
+              Atacadista — Cuiabá, MT
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1 className="font-display text-5xl md:text-7xl text-brand-beige leading-tight mb-4 animate-fade-up">
+            Tradição e{" "}
+            <span className="text-brand-red">Qualidade</span>
+            <br />
+            em Carnes
+          </h1>
+          <p className="font-body text-brand-beige/80 text-lg md:text-xl leading-relaxed mb-8 max-w-xl animate-fade-up" style={{ animationDelay: "0.15s" }}>
+            Há mais de <strong className="text-brand-beige">13 anos</strong> no mercado, a JB Carnes conecta os melhores bovinos ao seu negócio — com expertise, confiança e distribuição para todo o Brasil.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+            <button
+              onClick={() => scrollTo("servicos")}
+              className="bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold px-8 py-4 rounded-full transition-all duration-300 hover:shadow-hero hover:-translate-y-0.5"
+            >
+              Nossos Serviços
+            </button>
+            <button
+              onClick={() => scrollTo("sobre")}
+              className="border-2 border-brand-beige/60 hover:border-brand-beige text-brand-beige font-body font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:bg-brand-beige/10"
+            >
+              Conheça a Empresa
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats bar */}
+      <div className="absolute bottom-0 left-0 right-0 bg-brand-dark-brown/90 backdrop-blur-sm border-t border-brand-red/30">
+        <div className="container mx-auto py-5 grid grid-cols-3 divide-x divide-brand-red/30">
+          {[
+            { value: "+13", label: "Anos de Mercado" },
+            { value: "+50", label: "Anos de Experiência" },
+            { value: "MT+", label: "Atendimento Nacional" },
+          ].map((stat) => (
+            <div key={stat.label} className="flex flex-col items-center px-4">
+              <span className="font-display text-3xl font-bold text-brand-red">{stat.value}</span>
+              <span className="font-body text-brand-beige/70 text-xs uppercase tracking-wide mt-0.5">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────
+   ABOUT
+──────────────────────────────────────────────── */
+function About() {
+  const { ref, inView } = useInView();
+  const { ref: imgRef, inView: imgInView } = useInView();
+
+  return (
+    <section id="sobre" className="py-24 bg-brand-light-beige overflow-hidden">
+      <div className="container mx-auto">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          {/* Image side */}
+          <div
+            ref={imgRef}
+            className={`relative transition-all duration-700 ${imgInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
+          >
+            <div className="relative rounded-2xl overflow-hidden shadow-card">
+              <img
+                src={cattleFarm}
+                alt="Rebanho bovino JB Carnes"
+                className="w-full h-[420px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark-brown/60 to-transparent" />
+            </div>
+            {/* Floating badge */}
+            <div className="absolute -bottom-6 -right-6 bg-brand-red rounded-2xl p-6 shadow-hero">
+              <p className="font-display text-4xl font-bold text-primary-foreground">13+</p>
+              <p className="font-body text-primary-foreground/80 text-sm">anos no<br />mercado</p>
+            </div>
+            {/* Decorative */}
+            <div className="absolute -top-4 -left-4 w-24 h-24 border-2 border-brand-red/30 rounded-2xl -z-10" />
+          </div>
+
+          {/* Text side */}
+          <div
+            ref={ref}
+            className={`transition-all duration-700 delay-200 ${inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+          >
+            <span className="section-divider mb-6" />
+            <p className="font-body text-brand-red font-bold text-sm uppercase tracking-widest mb-3">
+              Nossa História
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl text-brand-brown leading-tight mb-6">
+              Mais de meio século de <span className="text-brand-red">paixão</span> pelo setor
+            </h2>
+            <p className="font-body text-muted-foreground leading-relaxed mb-5">
+              Fundada pelo Sr. <strong className="text-brand-brown">João Batista</strong>, profissional com mais de <strong className="text-brand-brown">50 anos de experiência</strong> no setor de bovinocultura e comercialização de carnes, a JB Carnes Atacadista possui sólida atuação há mais de 13 anos no mercado.
+            </p>
+            <p className="font-body text-muted-foreground leading-relaxed mb-8">
+              Ao longo de sua trajetória, o fundador consolidou amplo conhecimento técnico e operacional, construindo uma reputação baseada na <strong className="text-brand-brown">confiança</strong>, na qualidade dos produtos e no relacionamento duradouro com clientes e fornecedores de todo o Brasil.
+            </p>
+
+            {/* Values */}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: "🏅", title: "Qualidade", desc: "Seleção rigorosa dos melhores bovinos" },
+                { icon: "🤝", title: "Confiança", desc: "Relacionamentos sólidos e duradouros" },
+                { icon: "🌎", title: "Alcance", desc: "Distribuição para múltiplos estados" },
+                { icon: "📦", title: "Experiência", desc: "+50 anos de expertise no segmento" },
+              ].map((v) => (
+                <div key={v.title} className="flex items-start gap-3 p-4 bg-card rounded-xl shadow-card">
+                  <span className="text-2xl mt-0.5">{v.icon}</span>
+                  <div>
+                    <p className="font-body font-bold text-brand-brown text-sm">{v.title}</p>
+                    <p className="font-body text-muted-foreground text-xs mt-0.5">{v.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────
+   SERVICES
+──────────────────────────────────────────────── */
+function Services() {
+  const { ref, inView } = useInView();
+
+  const services = [
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      title: "Compra de Bovinos",
+      desc: "Realizamos a compra estratégica de bovinos com criteriosa seleção de fornecedores, garantindo qualidade e rastreabilidade.",
+    },
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+        </svg>
+      ),
+      title: "Distribuição de Carnes",
+      desc: "Distribuição de carnes bovinas para Cuiabá e diversos outros estados, com logística eficiente e entregas pontuais.",
+    },
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
+        </svg>
+      ),
+      title: "Atendimento a Açougues",
+      desc: "Fornecimento para açougues e mercados com produtos de alta qualidade e condições comerciais diferenciadas.",
+    },
+    {
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
+        </svg>
+      ),
+      title: "Clientes Institucionais",
+      desc: "Atendemos distribuidores e clientes institucionais com volume e regularidade, garantindo abastecimento contínuo.",
+    },
+  ];
+
+  return (
+    <section id="servicos" className="py-24 bg-brand-dark-brown relative overflow-hidden">
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-red blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-brand-beige blur-3xl" />
+      </div>
+
+      <div className="container mx-auto relative z-10">
+        {/* Header */}
+        <div ref={ref} className={`text-center mb-16 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <span className="section-divider mx-auto mb-6" />
+          <p className="font-body text-brand-red font-bold text-sm uppercase tracking-widest mb-3">
+            O Que Fazemos
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl text-brand-beige leading-tight">
+            Produtos e <span className="text-brand-red">Serviços</span>
+          </h2>
+          <p className="font-body text-brand-beige/60 mt-4 max-w-xl mx-auto">
+            Da compra criteriosa do bovino à entrega no seu estabelecimento — todo o processo com qualidade e eficiência.
+          </p>
+        </div>
+
+        {/* Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.map((s, i) => (
+            <div
+              key={s.title}
+              className={`group p-6 rounded-2xl border border-brand-red/20 bg-brand-brown/30 hover:bg-brand-red/10 hover:border-brand-red/50 transition-all duration-400 cursor-default ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              style={{ transitionDelay: `${i * 100 + 200}ms` }}
+            >
+              <div className="text-brand-red mb-4 group-hover:scale-110 transition-transform duration-300">
+                {s.icon}
+              </div>
+              <h3 className="font-display text-lg text-brand-beige mb-2">{s.title}</h3>
+              <p className="font-body text-brand-beige/60 text-sm leading-relaxed">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Coverage banner */}
+        <div className="mt-16 p-8 rounded-2xl bg-brand-red/10 border border-brand-red/30 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="font-display text-2xl text-brand-beige mb-1">Atendemos todo o Brasil</h3>
+            <p className="font-body text-brand-beige/60 text-sm">
+              Cuiabá e outros estados — distribuidores, mercados, açougues e clientes institucionais.
+            </p>
+          </div>
+          <a
+            href="https://wa.me/5565999999999"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold px-8 py-4 rounded-full transition-all duration-300 hover:shadow-hero whitespace-nowrap"
+          >
+            Solicitar Orçamento
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────
+   DIFFERENTIALS
+──────────────────────────────────────────────── */
+function Differentials() {
+  const { ref, inView } = useInView();
+
+  const items = [
+    { number: "01", title: "Seleção Criteriosa", desc: "Escolhemos os melhores bovinos com base em critérios técnicos e padrões de qualidade elevados." },
+    { number: "02", title: "Fornecedores Parceiros", desc: "Relacionamentos de longo prazo com produtores e frigoríficos de confiança em todo o território nacional." },
+    { number: "03", title: "Logística Eficiente", desc: "Distribuição para Cuiabá e demais estados com agilidade e pontualidade." },
+    { number: "04", title: "Expertise Comprovada", desc: "Mais de 50 anos de experiência acumulada garantem decisões técnicas assertivas e rentáveis." },
+  ];
+
+  return (
+    <section className="py-24 bg-brand-light-beige">
+      <div className="container mx-auto">
+        <div
+          ref={ref}
+          className={`grid md:grid-cols-2 lg:grid-cols-4 gap-8 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        >
+          {items.map((item, i) => (
+            <div
+              key={item.number}
+              className="relative"
+              style={{ transitionDelay: `${i * 100}ms` }}
+            >
+              <span className="font-display text-6xl font-bold text-brand-red/15 block leading-none mb-2">
+                {item.number}
+              </span>
+              <div className="w-8 h-0.5 bg-brand-red mb-4" />
+              <h3 className="font-display text-xl text-brand-brown mb-2">{item.title}</h3>
+              <p className="font-body text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────
+   CONTACT / FOOTER
+──────────────────────────────────────────────── */
+function Contact() {
+  const { ref, inView } = useInView();
+
+  return (
+    <section id="contato" className="gradient-section py-20">
+      <div className="container mx-auto">
+        <div
+          ref={ref}
+          className={`max-w-2xl mx-auto text-center transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+          <span className="section-divider mx-auto mb-6" />
+          <p className="font-body text-brand-red font-bold text-sm uppercase tracking-widest mb-3">Contato</p>
+          <h2 className="font-display text-4xl md:text-5xl text-brand-beige mb-4">
+            Vamos <span className="text-brand-red">Conversar</span>?
+          </h2>
+          <p className="font-body text-brand-beige/60 mb-10">
+            Entre em contato e saiba como a JB Carnes pode ser o parceiro ideal para o seu negócio.
+          </p>
+
+          <a
+            href="https://wa.me/5565999999999"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20b858] text-white font-body font-bold text-lg px-10 py-5 rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-hero mb-10"
+          >
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Falar pelo WhatsApp
+          </a>
+
+          <div className="border-t border-brand-red/20 pt-8 mt-4">
+            <img
+              src={logoDark}
+              alt="JB Carnes Atacadista"
+              className="h-16 w-auto object-contain mx-auto rounded mb-4"
+            />
+            <p className="font-body text-brand-beige/40 text-xs">
+              © {new Date().getFullYear()} JB Carnes Atacadista. Todos os direitos reservados.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────
+   PAGE
+──────────────────────────────────────────────── */
+const Index = () => (
+  <div className="min-h-screen font-body">
+    <Navbar />
+    <Hero />
+    <About />
+    <Services />
+    <Differentials />
+    <Contact />
+  </div>
+);
 
 export default Index;

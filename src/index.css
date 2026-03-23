@@ -2,87 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Nunito:wght@300;400;500;600;700&display=swap');
+
+/* JB Carnes Atacadista — Design System
+   Brand colors: Deep Crimson Red, Dark Espresso Brown, Warm Beige/Gold
+   All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Brand */
+    --background: 30 15% 97%;
+    --foreground: 20 60% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 20 60% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 20 60% 8%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Crimson Red — Primary Brand */
+    --primary: 354 69% 43%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Dark Espresso Brown — Secondary */
+    --secondary: 20 75% 13%;
+    --secondary-foreground: 40 45% 82%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Warm Beige/Gold */
+    --muted: 40 30% 90%;
+    --muted-foreground: 20 40% 35%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 40 45% 72%;
+    --accent-foreground: 20 75% 13%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 20 20% 85%;
+    --input: 20 20% 88%;
+    --ring: 354 69% 43%;
 
     --radius: 0.5rem;
 
+    /* Custom Tokens */
+    --brand-red: 354 69% 43%;
+    --brand-brown: 20 75% 13%;
+    --brand-beige: 40 45% 72%;
+    --brand-dark-brown: 20 78% 8%;
+    --brand-light-beige: 40 40% 92%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(160deg, hsl(20 78% 8% / 0.95) 0%, hsl(20 75% 13% / 0.85) 50%, hsl(354 69% 43% / 0.6) 100%);
+    --gradient-section: linear-gradient(180deg, hsl(20 78% 8%) 0%, hsl(20 75% 13%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(354 69% 43%) 0%, hsl(354 69% 33%) 100%);
+
+    /* Shadows */
+    --shadow-card: 0 8px 32px -8px hsl(20 75% 13% / 0.25);
+    --shadow-hero: 0 20px 60px -20px hsl(354 69% 43% / 0.4);
+
+    /* Sidebar (keeping defaults) */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
+    --background: 20 78% 8%;
+    --foreground: 40 45% 82%;
+    --card: 20 75% 11%;
+    --card-foreground: 40 45% 82%;
+    --popover: 20 75% 11%;
+    --popover-foreground: 40 45% 82%;
+    --primary: 354 69% 48%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 20 50% 18%;
+    --secondary-foreground: 40 45% 82%;
+    --muted: 20 50% 16%;
+    --muted-foreground: 40 30% 65%;
+    --accent: 40 45% 72%;
+    --accent-foreground: 20 75% 8%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 20 40% 20%;
+    --input: 20 40% 20%;
+    --ring: 354 69% 48%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -101,5 +110,33 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer utilities {
+  .text-brand-red { color: hsl(var(--brand-red)); }
+  .text-brand-brown { color: hsl(var(--brand-brown)); }
+  .text-brand-beige { color: hsl(var(--brand-beige)); }
+  .bg-brand-red { background-color: hsl(var(--brand-red)); }
+  .bg-brand-brown { background-color: hsl(var(--brand-brown)); }
+  .bg-brand-dark-brown { background-color: hsl(var(--brand-dark-brown)); }
+  .bg-brand-beige { background-color: hsl(var(--brand-beige)); }
+  .bg-brand-light-beige { background-color: hsl(var(--brand-light-beige)); }
+  .gradient-hero { background: var(--gradient-hero); }
+  .gradient-section { background: var(--gradient-section); }
+  .gradient-accent { background: var(--gradient-accent); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-hero { box-shadow: var(--shadow-hero); }
+
+  .section-divider {
+    width: 60px;
+    height: 3px;
+    background: hsl(var(--brand-red));
+    display: block;
   }
 }
