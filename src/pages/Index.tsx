@@ -597,6 +597,7 @@ const Index = () => (
     <Navbar />
     <Hero />
     <About />
+    <MissionVisionValues />
     <Services />
     <Differentials />
     <Contact />
