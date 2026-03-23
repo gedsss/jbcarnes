@@ -28,6 +28,8 @@ function useInView(threshold = 0.15) {
 ──────────────────────────────────────────────── */
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
@@ -35,28 +37,35 @@ function Navbar() {
   }, []);
 
   const scrollTo = (id: string) => {
+    setMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const navItems = [
+    { label: "Início", id: "hero" },
+    { label: "Sobre", id: "sobre" },
+    { label: "Serviços", id: "servicos" },
+    { label: "Contato", id: "contato" },
+  ];
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-brand-dark-brown/95 backdrop-blur-sm shadow-lg py-3" : "bg-transparent py-5"
+        scrolled || menuOpen
+          ? "bg-brand-dark-brown/95 backdrop-blur-sm shadow-lg py-3"
+          : "bg-transparent py-4"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between">
         <img
           src={logoDark}
           alt="JB Carnes Atacadista"
-          className="h-20 w-auto object-contain rounded"
+          className="h-16 md:h-20 w-auto object-contain rounded"
         />
+
+        {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          {[
-            { label: "Início", id: "hero" },
-            { label: "Sobre", id: "sobre" },
-            { label: "Serviços", id: "servicos" },
-            { label: "Contato", id: "contato" },
-          ].map((item) => (
+          {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
@@ -66,6 +75,8 @@ function Navbar() {
             </button>
           ))}
         </div>
+
+        {/* Desktop CTA */}
         <a
           href="https://wa.me/5565999999999"
           target="_blank"
@@ -77,7 +88,52 @@ function Navbar() {
           </svg>
           Fale Conosco
         </a>
+
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden flex flex-col gap-1.5 p-2"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menu"
+        >
+          <span
+            className={`block w-6 h-0.5 bg-brand-beige transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-brand-beige transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-brand-beige transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+          />
+        </button>
       </div>
+
+      {/* Mobile menu dropdown */}
+      {menuOpen && (
+        <div className="md:hidden bg-brand-dark-brown/98 border-t border-brand-red/20 py-4">
+          <div className="container mx-auto flex flex-col gap-1">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className="font-body text-brand-beige hover:text-brand-red hover:bg-brand-red/10 transition-colors text-sm font-semibold tracking-wide uppercase text-left px-2 py-3 rounded-lg"
+              >
+                {item.label}
+              </button>
+            ))}
+            <a
+              href="https://wa.me/5565999999999"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center justify-center gap-2 bg-brand-red text-primary-foreground font-body font-bold text-sm px-5 py-3 rounded-full"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              Fale Conosco
+            </a>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -105,10 +161,10 @@ function Hero() {
       {/* Decorative line */}
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-brand-red opacity-60" />
 
-      <div className="container mx-auto relative z-10 pt-24">
+      <div className="container mx-auto relative z-10 pt-28 pb-32 px-4">
         <div className="max-w-3xl">
           {/* Tag */}
-          <div className="inline-flex items-center gap-2 bg-brand-red/20 border border-brand-red/40 px-4 py-1.5 rounded-full mb-6 animate-fade-in">
+          <div className="inline-flex items-center gap-2 bg-brand-red/20 border border-brand-red/40 px-3 py-1.5 rounded-full mb-5 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-brand-red block" />
             <span className="text-brand-beige font-body text-xs font-semibold uppercase tracking-widest">
               Atacadista — Cuiabá, MT
@@ -116,27 +172,27 @@ function Hero() {
           </div>
 
           {/* Headline */}
-          <h1 className="font-display text-5xl md:text-7xl text-brand-beige leading-tight mb-4 animate-fade-up">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl text-brand-beige leading-tight mb-4 animate-fade-up">
             Tradição e{" "}
             <span className="text-brand-red">Qualidade</span>
             <br />
             em Carnes
           </h1>
-          <p className="font-body text-brand-beige/80 text-lg md:text-xl leading-relaxed mb-8 max-w-xl animate-fade-up" style={{ animationDelay: "0.15s" }}>
+          <p className="font-body text-brand-beige/80 text-base md:text-xl leading-relaxed mb-8 max-w-xl animate-fade-up" style={{ animationDelay: "0.15s" }}>
             Há mais de <strong className="text-brand-beige">13 anos</strong> no mercado, a JB Carnes conecta os melhores bovinos ao seu negócio — com expertise, confiança e distribuição para todo o Brasil.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+          <div className="flex flex-col sm:flex-row gap-3 animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <button
               onClick={() => scrollTo("servicos")}
-              className="bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold px-8 py-4 rounded-full transition-all duration-300 hover:shadow-hero hover:-translate-y-0.5"
+              className="bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold px-8 py-4 rounded-full transition-all duration-300 hover:shadow-hero hover:-translate-y-0.5 text-center"
             >
               Nossos Serviços
             </button>
             <button
               onClick={() => scrollTo("sobre")}
-              className="border-2 border-brand-beige/60 hover:border-brand-beige text-brand-beige font-body font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:bg-brand-beige/10"
+              className="border-2 border-brand-beige/60 hover:border-brand-beige text-brand-beige font-body font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:bg-brand-beige/10 text-center"
             >
               Conheça a Empresa
             </button>
@@ -146,15 +202,15 @@ function Hero() {
 
       {/* Stats bar */}
       <div className="absolute bottom-0 left-0 right-0 bg-brand-dark-brown/90 backdrop-blur-sm border-t border-brand-red/30">
-        <div className="container mx-auto py-5 grid grid-cols-3 divide-x divide-brand-red/30">
+        <div className="container mx-auto py-4 grid grid-cols-3 divide-x divide-brand-red/30">
           {[
             { value: "+13", label: "Anos de Mercado" },
             { value: "+50", label: "Anos de Experiência" },
-            { value: "MT+", label: "Atendimento Nacional" },
+            { value: "MT+", label: "Atend. Nacional" },
           ].map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center px-4">
-              <span className="font-display text-3xl font-bold text-brand-red">{stat.value}</span>
-              <span className="font-body text-brand-beige/70 text-xs uppercase tracking-wide mt-0.5">{stat.label}</span>
+            <div key={stat.label} className="flex flex-col items-center px-2 sm:px-4">
+              <span className="font-display text-2xl sm:text-3xl font-bold text-brand-red">{stat.value}</span>
+              <span className="font-body text-brand-beige/70 text-[10px] sm:text-xs uppercase tracking-wide mt-0.5 text-center">{stat.label}</span>
             </div>
           ))}
         </div>
@@ -171,9 +227,9 @@ function About() {
   const { ref: imgRef, inView: imgInView } = useInView();
 
   return (
-    <section id="sobre" className="py-24 bg-brand-light-beige overflow-hidden">
-      <div className="container mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+    <section id="sobre" className="py-16 md:py-24 bg-brand-light-beige overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
           {/* Image side */}
           <div
             ref={imgRef}
@@ -183,29 +239,29 @@ function About() {
               <img
                 src={cattleFarm}
                 alt="Rebanho bovino JB Carnes"
-                className="w-full h-[420px] object-cover"
+                className="w-full h-[280px] sm:h-[360px] md:h-[420px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark-brown/60 to-transparent" />
             </div>
             {/* Floating badge */}
-            <div className="absolute -bottom-6 -right-6 bg-brand-red rounded-2xl p-6 shadow-hero">
-              <p className="font-display text-4xl font-bold text-primary-foreground">13+</p>
-              <p className="font-body text-primary-foreground/80 text-sm">anos no<br />mercado</p>
+            <div className="absolute -bottom-5 -right-3 md:-bottom-6 md:-right-6 bg-brand-red rounded-2xl p-4 md:p-6 shadow-hero">
+              <p className="font-display text-3xl md:text-4xl font-bold text-primary-foreground">13+</p>
+              <p className="font-body text-primary-foreground/80 text-xs md:text-sm">anos no<br />mercado</p>
             </div>
             {/* Decorative */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 border-2 border-brand-red/30 rounded-2xl -z-10" />
+            <div className="absolute -top-4 -left-4 w-16 h-16 md:w-24 md:h-24 border-2 border-brand-red/30 rounded-2xl -z-10" />
           </div>
 
           {/* Text side */}
           <div
             ref={ref}
-            className={`transition-all duration-700 delay-200 ${inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+            className={`transition-all duration-700 delay-200 mt-6 md:mt-0 ${inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
           >
             <span className="section-divider mb-6" />
             <p className="font-body text-brand-red font-bold text-sm uppercase tracking-widest mb-3">
               Nossa História
             </p>
-            <h2 className="font-display text-4xl md:text-5xl text-brand-brown leading-tight mb-6">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-brown leading-tight mb-6">
               Mais de meio século de <span className="text-brand-red">paixão</span> pelo setor
             </h2>
             <p className="font-body text-muted-foreground leading-relaxed mb-5">
@@ -216,15 +272,15 @@ function About() {
             </p>
 
             {/* Values */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
               {[
                 { icon: "🏅", title: "Qualidade", desc: "Seleção rigorosa dos melhores bovinos" },
                 { icon: "🤝", title: "Confiança", desc: "Relacionamentos sólidos e duradouros" },
                 { icon: "🌎", title: "Alcance", desc: "Distribuição para múltiplos estados" },
                 { icon: "📦", title: "Experiência", desc: "+50 anos de expertise no segmento" },
               ].map((v) => (
-                <div key={v.title} className="flex items-start gap-3 p-4 bg-card rounded-xl shadow-card">
-                  <span className="text-2xl mt-0.5">{v.icon}</span>
+                <div key={v.title} className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl shadow-card">
+                  <span className="text-xl md:text-2xl mt-0.5">{v.icon}</span>
                   <div>
                     <p className="font-body font-bold text-brand-brown text-sm">{v.title}</p>
                     <p className="font-body text-muted-foreground text-xs mt-0.5">{v.desc}</p>
@@ -285,34 +341,34 @@ function Services() {
   ];
 
   return (
-    <section id="servicos" className="py-24 bg-brand-dark-brown relative overflow-hidden">
+    <section id="servicos" className="py-16 md:py-24 bg-brand-dark-brown relative overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-red blur-3xl" />
         <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-brand-beige blur-3xl" />
       </div>
 
-      <div className="container mx-auto relative z-10">
+      <div className="container mx-auto relative z-10 px-4">
         {/* Header */}
-        <div ref={ref} className={`text-center mb-16 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div ref={ref} className={`text-center mb-10 md:mb-16 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <span className="section-divider mx-auto mb-6" />
           <p className="font-body text-brand-red font-bold text-sm uppercase tracking-widest mb-3">
             O Que Fazemos
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-brand-beige leading-tight">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-beige leading-tight">
             Produtos e <span className="text-brand-red">Serviços</span>
           </h2>
-          <p className="font-body text-brand-beige/60 mt-4 max-w-xl mx-auto">
+          <p className="font-body text-brand-beige/60 mt-4 max-w-xl mx-auto text-sm md:text-base">
             Da compra criteriosa do bovino à entrega no seu estabelecimento — todo o processo com qualidade e eficiência.
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {services.map((s, i) => (
             <div
               key={s.title}
-              className={`group p-6 rounded-2xl border border-brand-red/20 bg-brand-brown/30 hover:bg-brand-red/10 hover:border-brand-red/50 transition-all duration-400 cursor-default ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              className={`group p-5 md:p-6 rounded-2xl border border-brand-red/20 bg-brand-brown/30 hover:bg-brand-red/10 hover:border-brand-red/50 transition-all duration-400 cursor-default ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               style={{ transitionDelay: `${i * 100 + 200}ms` }}
             >
               <div className="text-brand-red mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -325,9 +381,9 @@ function Services() {
         </div>
 
         {/* Coverage banner */}
-        <div className="mt-16 p-8 rounded-2xl bg-brand-red/10 border border-brand-red/30 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 className="font-display text-2xl text-brand-beige mb-1">Atendemos todo o Brasil</h3>
+        <div className="mt-10 md:mt-16 p-6 md:p-8 rounded-2xl bg-brand-red/10 border border-brand-red/30 flex flex-col md:flex-row items-center justify-between gap-5">
+          <div className="text-center md:text-left">
+            <h3 className="font-display text-xl md:text-2xl text-brand-beige mb-1">Atendemos todo o Brasil</h3>
             <p className="font-body text-brand-beige/60 text-sm">
               Cuiabá e outros estados — distribuidores, mercados, açougues e clientes institucionais.
             </p>
@@ -336,7 +392,7 @@ function Services() {
             href="https://wa.me/5565999999999"
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold px-8 py-4 rounded-full transition-all duration-300 hover:shadow-hero whitespace-nowrap"
+            className="w-full md:w-auto text-center shrink-0 bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold px-8 py-4 rounded-full transition-all duration-300 hover:shadow-hero"
           >
             Solicitar Orçamento
           </a>
@@ -360,11 +416,11 @@ function Differentials() {
   ];
 
   return (
-    <section className="py-24 bg-brand-light-beige">
-      <div className="container mx-auto">
+    <section className="py-16 md:py-24 bg-brand-light-beige">
+      <div className="container mx-auto px-4">
         <div
           ref={ref}
-          className={`grid md:grid-cols-2 lg:grid-cols-4 gap-8 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
           {items.map((item, i) => (
             <div
@@ -393,18 +449,18 @@ function Contact() {
   const { ref, inView } = useInView();
 
   return (
-    <section id="contato" className="gradient-section py-20">
-      <div className="container mx-auto">
+    <section id="contato" className="gradient-section py-16 md:py-20">
+      <div className="container mx-auto px-4">
         <div
           ref={ref}
           className={`max-w-2xl mx-auto text-center transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <span className="section-divider mx-auto mb-6" />
           <p className="font-body text-brand-red font-bold text-sm uppercase tracking-widest mb-3">Contato</p>
-          <h2 className="font-display text-4xl md:text-5xl text-brand-beige mb-4">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-beige mb-4">
             Vamos <span className="text-brand-red">Conversar</span>?
           </h2>
-          <p className="font-body text-brand-beige/60 mb-10">
+          <p className="font-body text-brand-beige/60 mb-10 text-sm md:text-base">
             Entre em contato e saiba como a JB Carnes pode ser o parceiro ideal para o seu negócio.
           </p>
 
@@ -412,9 +468,9 @@ function Contact() {
             href="https://wa.me/5565999999999"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20b858] text-white font-body font-bold text-lg px-10 py-5 rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-hero mb-10"
+            className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20b858] text-primary-foreground font-body font-bold text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-hero mb-10"
           >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
             </svg>
             Falar pelo WhatsApp
@@ -424,7 +480,7 @@ function Contact() {
             <img
               src={logoDark}
               alt="JB Carnes Atacadista"
-              className="h-16 w-auto object-contain mx-auto rounded mb-4"
+              className="h-14 md:h-16 w-auto object-contain mx-auto rounded mb-4"
             />
             <p className="font-body text-brand-beige/40 text-xs">
               © {new Date().getFullYear()} JB Carnes Atacadista. Todos os direitos reservados.
