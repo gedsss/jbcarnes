@@ -48,7 +48,7 @@ function Navbar() {
         <img
           src={logoDark}
           alt="JB Carnes Atacadista"
-          className="h-12 w-auto object-contain rounded"
+          className="h-20 w-auto object-contain rounded"
         />
         <div className="hidden md:flex items-center gap-8">
           {[
