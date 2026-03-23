@@ -507,35 +507,30 @@ function Differentials() {
 
   const slides = [
     {
-      number: "01",
       bg: "bg-brand-red",
       numberBg: "bg-brand-dark-brown",
       title: "Seleção Criteriosa de Bovinos",
       desc: "Cada compra começa com uma análise técnica rigorosa. Selecionamos fornecedores e animais com base em critérios de qualidade, rastreabilidade e sanidade, garantindo um produto final superior para nossos clientes.",
     },
     {
-      number: "02",
       bg: "bg-brand-dark-brown",
       numberBg: "bg-brand-red",
       title: "Relacionamentos de Longo Prazo",
       desc: "Construímos parcerias sólidas e duradouras com produtores e frigoríficos de confiança em todo o território nacional, sustentadas por mais de 50 anos de atuação no setor.",
     },
     {
-      number: "03",
       bg: "bg-brand-red",
       numberBg: "bg-brand-dark-brown",
       title: "Distribuição para Todo o Brasil",
       desc: "Atendemos Cuiabá e diversos estados com logística eficiente e entregas pontuais, abastecendo açougues, mercados, distribuidores e clientes institucionais com regularidade e confiança.",
     },
     {
-      number: "04",
       bg: "bg-brand-dark-brown",
       numberBg: "bg-brand-red",
       title: "Expertise de Meio Século",
       desc: "Fundada pelo Sr. João Batista, com mais de 50 anos de experiência no setor de bovinocultura, a JB Carnes transforma conhecimento acumulado em decisões assertivas e resultados para os clientes.",
     },
     {
-      number: "05",
       bg: "bg-brand-red",
       numberBg: "bg-brand-dark-brown",
       title: "Compromisso com Qualidade",
@@ -543,40 +538,43 @@ function Differentials() {
     },
   ];
 
-  // Auto-advance
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActive((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [slides.length]);
+  // No auto-advance — only user interaction changes the slide
+
+  const goTo = (i: number) => setActive(i);
+  const goPrev = () => setActive((prev) => (prev - 1 + slides.length) % slides.length);
+  const goNext = () => setActive((prev) => (prev + 1) % slides.length);
 
   const current = slides[active];
+  // Display number always reflects the real slide index (starts at 1)
+  const displayNumber = String(active + 1).padStart(2, "0");
 
   return (
     <section className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-700 ${current.bg}`}>
       {/* Subtle dot texture */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
             className="absolute w-1.5 h-1.5 rounded-full bg-primary-foreground"
-            style={{ left: `${(i * 37) % 100}%`, top: `${(i * 53) % 100}%`, opacity: Math.random() * 0.6 + 0.2 }}
+            style={{ left: `${(i * 37) % 100}%`, top: `${(i * 53) % 100}%`, opacity: 0.4 }}
           />
         ))}
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-2xl mx-auto py-24">
+      <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 max-w-2xl mx-auto py-28 md:py-32">
         {/* Number badge */}
-        <div className={`w-20 h-20 rounded-full ${current.numberBg} flex items-center justify-center mb-8 shadow-hero transition-all duration-500`}>
-          <span className="font-display text-3xl font-bold text-primary-foreground">{current.number}</span>
+        <div
+          key={`badge-${active}`}
+          className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full ${current.numberBg} flex items-center justify-center mb-7 shadow-hero animate-fade-in`}
+        >
+          <span className="font-display text-2xl sm:text-3xl font-bold text-primary-foreground">{displayNumber}</span>
         </div>
 
         {/* Title */}
         <h2
           key={`title-${active}`}
-          className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-primary-foreground leading-tight mb-6 animate-fade-up"
+          className="font-display text-2xl sm:text-4xl md:text-5xl font-bold text-primary-foreground leading-tight mb-5 animate-fade-up"
         >
           {current.title}
         </h2>
@@ -584,17 +582,22 @@ function Differentials() {
         {/* Description */}
         <p
           key={`desc-${active}`}
-          className="font-body text-primary-foreground/85 text-base md:text-lg leading-relaxed animate-fade-up"
+          className="font-body text-primary-foreground/85 text-sm sm:text-base md:text-lg leading-relaxed animate-fade-up max-w-xl"
           style={{ animationDelay: "0.1s" }}
         >
           {current.desc}
         </p>
 
-        {/* Prev / Next arrows — mobile friendly */}
-        <div className="flex items-center gap-4 mt-10">
+        {/* Slide counter */}
+        <p className="font-body text-primary-foreground/50 text-xs mt-6 tracking-widest uppercase">
+          {active + 1} / {slides.length}
+        </p>
+
+        {/* Prev / Next arrows */}
+        <div className="flex items-center gap-5 mt-6">
           <button
-            onClick={() => setActive((active - 1 + slides.length) % slides.length)}
-            className="w-10 h-10 rounded-full border-2 border-primary-foreground/40 hover:border-primary-foreground flex items-center justify-center text-primary-foreground transition-all duration-200 hover:bg-primary-foreground/10"
+            onClick={goPrev}
+            className="w-11 h-11 rounded-full border-2 border-primary-foreground/40 hover:border-primary-foreground flex items-center justify-center text-primary-foreground transition-all duration-200 hover:bg-primary-foreground/10 active:scale-95"
             aria-label="Anterior"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -602,8 +605,8 @@ function Differentials() {
             </svg>
           </button>
           <button
-            onClick={() => setActive((active + 1) % slides.length)}
-            className="w-10 h-10 rounded-full border-2 border-primary-foreground/40 hover:border-primary-foreground flex items-center justify-center text-primary-foreground transition-all duration-200 hover:bg-primary-foreground/10"
+            onClick={goNext}
+            className="w-11 h-11 rounded-full border-2 border-primary-foreground/40 hover:border-primary-foreground flex items-center justify-center text-primary-foreground transition-all duration-200 hover:bg-primary-foreground/10 active:scale-95"
             aria-label="Próximo"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -613,33 +616,33 @@ function Differentials() {
         </div>
       </div>
 
-      {/* Dot navigation — right side (desktop) / bottom (mobile) */}
-      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-3">
+      {/* Dot navigation — right side (desktop) */}
+      <div className="absolute right-5 md:right-8 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4">
         {slides.map((_, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => goTo(i)}
             aria-label={`Slide ${i + 1}`}
-            className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
+            className={`rounded-full border-2 transition-all duration-300 ${
               i === active
-                ? "bg-primary-foreground border-primary-foreground scale-125"
-                : "bg-transparent border-primary-foreground/50 hover:border-primary-foreground"
+                ? "w-3 h-3 bg-primary-foreground border-primary-foreground scale-125"
+                : "w-2.5 h-2.5 bg-transparent border-primary-foreground/50 hover:border-primary-foreground hover:scale-110"
             }`}
           />
         ))}
       </div>
 
       {/* Dots bottom — mobile */}
-      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-3 md:hidden">
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-3 md:hidden">
         {slides.map((_, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => goTo(i)}
             aria-label={`Slide ${i + 1}`}
-            className={`w-2.5 h-2.5 rounded-full border-2 transition-all duration-300 ${
+            className={`rounded-full border-2 transition-all duration-300 ${
               i === active
-                ? "bg-primary-foreground border-primary-foreground"
-                : "bg-transparent border-primary-foreground/50"
+                ? "w-3 h-3 bg-primary-foreground border-primary-foreground"
+                : "w-2.5 h-2.5 bg-transparent border-primary-foreground/50"
             }`}
           />
         ))}
