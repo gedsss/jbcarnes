@@ -296,6 +296,103 @@ function About() {
 }
 
 /* ────────────────────────────────────────────────
+   MISSION / VISION / VALUES
+──────────────────────────────────────────────── */
+function MissionVisionValues() {
+  const { ref, inView } = useInView();
+
+  const cards = [
+    {
+      icon: (
+        <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="12" cy="12" r="7" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="12" cy="12" r="11" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
+      title: "Nossa Missão",
+      text: "Conectar os melhores bovinos aos nossos clientes com qualidade, transparência e agilidade, superando expectativas e entregando produtos que fazem a diferença no dia a dia de cada negócio.",
+    },
+    {
+      icon: (
+        <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      title: "Nossa Visão",
+      text: "Ser reconhecida como a principal referência em comercialização e distribuição de bovinos no Centro-Oeste e no Brasil, gerando valor para clientes, parceiros e para a cadeia produtiva da carne.",
+    },
+    {
+      icon: (
+        <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+        </svg>
+      ),
+      title: "Nossos Valores",
+      values: ["Determinação", "Honestidade", "Qualidade", "Confiança", "Foco no Cliente"],
+    },
+  ];
+
+  return (
+    <section className="py-16 md:py-24 bg-background">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div
+          ref={ref}
+          className={`text-center mb-10 md:mb-14 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+          <span className="section-divider mx-auto mb-6" />
+          <p className="font-body text-brand-red font-bold text-sm uppercase tracking-widest mb-3">
+            Quem Somos
+          </p>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-brown leading-tight">
+            Missão, Visão e <span className="text-brand-red">Valores</span>
+          </h2>
+        </div>
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {cards.map((card, i) => (
+            <div
+              key={card.title}
+              className={`bg-card rounded-2xl p-8 flex flex-col items-center text-center shadow-card transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              style={{ transitionDelay: `${i * 150 + 200}ms` }}
+            >
+              {/* Icon circle */}
+              <div className="w-16 h-16 rounded-full bg-brand-red/10 flex items-center justify-center mb-5 text-brand-red">
+                {card.icon}
+              </div>
+
+              <h3 className="font-display text-xl text-brand-red font-bold mb-4">{card.title}</h3>
+
+              {card.text && (
+                <p className="font-body text-foreground/70 leading-relaxed text-sm md:text-base">{card.text}</p>
+              )}
+
+              {card.values && (
+                <ul className="w-full text-left space-y-3 mt-1">
+                  {card.values.map((v) => (
+                    <li key={v} className="flex items-center gap-3 font-body text-foreground/80 text-sm md:text-base">
+                      <span className="w-6 h-6 rounded-full bg-brand-red flex items-center justify-center shrink-0">
+                        <svg className="w-3.5 h-3.5 text-primary-foreground" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                      </span>
+                      {v}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ────────────────────────────────────────────────
    SERVICES
 ──────────────────────────────────────────────── */
 function Services() {
