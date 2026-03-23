@@ -500,40 +500,149 @@ function Services() {
 }
 
 /* ────────────────────────────────────────────────
-   DIFFERENTIALS
+   DIFFERENTIALS — fullscreen slide carousel
 ──────────────────────────────────────────────── */
 function Differentials() {
-  const { ref, inView } = useInView();
+  const [active, setActive] = useState(0);
 
-  const items = [
-    { number: "01", title: "Seleção Criteriosa", desc: "Escolhemos os melhores bovinos com base em critérios técnicos e padrões de qualidade elevados." },
-    { number: "02", title: "Fornecedores Parceiros", desc: "Relacionamentos de longo prazo com produtores e frigoríficos de confiança em todo o território nacional." },
-    { number: "03", title: "Logística Eficiente", desc: "Distribuição para Cuiabá e demais estados com agilidade e pontualidade." },
-    { number: "04", title: "Expertise Comprovada", desc: "Mais de 50 anos de experiência acumulada garantem decisões técnicas assertivas e rentáveis." },
+  const slides = [
+    {
+      number: "01",
+      bg: "bg-brand-red",
+      numberBg: "bg-brand-dark-brown",
+      title: "Seleção Criteriosa de Bovinos",
+      desc: "Cada compra começa com uma análise técnica rigorosa. Selecionamos fornecedores e animais com base em critérios de qualidade, rastreabilidade e sanidade, garantindo um produto final superior para nossos clientes.",
+    },
+    {
+      number: "02",
+      bg: "bg-brand-dark-brown",
+      numberBg: "bg-brand-red",
+      title: "Relacionamentos de Longo Prazo",
+      desc: "Construímos parcerias sólidas e duradouras com produtores e frigoríficos de confiança em todo o território nacional, sustentadas por mais de 50 anos de atuação no setor.",
+    },
+    {
+      number: "03",
+      bg: "bg-brand-red",
+      numberBg: "bg-brand-dark-brown",
+      title: "Distribuição para Todo o Brasil",
+      desc: "Atendemos Cuiabá e diversos estados com logística eficiente e entregas pontuais, abastecendo açougues, mercados, distribuidores e clientes institucionais com regularidade e confiança.",
+    },
+    {
+      number: "04",
+      bg: "bg-brand-dark-brown",
+      numberBg: "bg-brand-red",
+      title: "Expertise de Meio Século",
+      desc: "Fundada pelo Sr. João Batista, com mais de 50 anos de experiência no setor de bovinocultura, a JB Carnes transforma conhecimento acumulado em decisões assertivas e resultados para os clientes.",
+    },
+    {
+      number: "05",
+      bg: "bg-brand-red",
+      numberBg: "bg-brand-dark-brown",
+      title: "Compromisso com Qualidade",
+      desc: "Da compra do bovino até a entrega do produto, cada etapa é conduzida com responsabilidade e foco total na qualidade — porque reputação é o ativo mais valioso que construímos em mais de 13 anos de mercado.",
+    },
   ];
 
+  // Auto-advance
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const current = slides[active];
+
   return (
-    <section className="py-16 md:py-24 bg-brand-light-beige">
-      <div className="container mx-auto px-4">
-        <div
-          ref={ref}
-          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-        >
-          {items.map((item, i) => (
-            <div
-              key={item.number}
-              className="relative"
-              style={{ transitionDelay: `${i * 100}ms` }}
-            >
-              <span className="font-display text-6xl font-bold text-brand-red/15 block leading-none mb-2">
-                {item.number}
-              </span>
-              <div className="w-8 h-0.5 bg-brand-red mb-4" />
-              <h3 className="font-display text-xl text-brand-brown mb-2">{item.title}</h3>
-              <p className="font-body text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
+    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-700 ${current.bg}`}>
+      {/* Subtle dot texture */}
+      <div className="absolute inset-0 opacity-10">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-primary-foreground"
+            style={{ left: `${(i * 37) % 100}%`, top: `${(i * 53) % 100}%`, opacity: Math.random() * 0.6 + 0.2 }}
+          />
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-2xl mx-auto py-24">
+        {/* Number badge */}
+        <div className={`w-20 h-20 rounded-full ${current.numberBg} flex items-center justify-center mb-8 shadow-hero transition-all duration-500`}>
+          <span className="font-display text-3xl font-bold text-primary-foreground">{current.number}</span>
         </div>
+
+        {/* Title */}
+        <h2
+          key={`title-${active}`}
+          className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-primary-foreground leading-tight mb-6 animate-fade-up"
+        >
+          {current.title}
+        </h2>
+
+        {/* Description */}
+        <p
+          key={`desc-${active}`}
+          className="font-body text-primary-foreground/85 text-base md:text-lg leading-relaxed animate-fade-up"
+          style={{ animationDelay: "0.1s" }}
+        >
+          {current.desc}
+        </p>
+
+        {/* Prev / Next arrows — mobile friendly */}
+        <div className="flex items-center gap-4 mt-10">
+          <button
+            onClick={() => setActive((active - 1 + slides.length) % slides.length)}
+            className="w-10 h-10 rounded-full border-2 border-primary-foreground/40 hover:border-primary-foreground flex items-center justify-center text-primary-foreground transition-all duration-200 hover:bg-primary-foreground/10"
+            aria-label="Anterior"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button
+            onClick={() => setActive((active + 1) % slides.length)}
+            className="w-10 h-10 rounded-full border-2 border-primary-foreground/40 hover:border-primary-foreground flex items-center justify-center text-primary-foreground transition-all duration-200 hover:bg-primary-foreground/10"
+            aria-label="Próximo"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Dot navigation — right side (desktop) / bottom (mobile) */}
+      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-3">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            aria-label={`Slide ${i + 1}`}
+            className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
+              i === active
+                ? "bg-primary-foreground border-primary-foreground scale-125"
+                : "bg-transparent border-primary-foreground/50 hover:border-primary-foreground"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Dots bottom — mobile */}
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-3 md:hidden">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            aria-label={`Slide ${i + 1}`}
+            className={`w-2.5 h-2.5 rounded-full border-2 transition-all duration-300 ${
+              i === active
+                ? "bg-primary-foreground border-primary-foreground"
+                : "bg-transparent border-primary-foreground/50"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );
