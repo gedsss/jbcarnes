@@ -2,6 +2,11 @@ import heroMeat from "@/assets/hero-meat.jpg";
 import cattleFarm from "@/assets/cattle-farm.jpg";
 import logoRed from "@/assets/jb-carnes-logo-red.jpeg";
 import logoDark from "@/assets/jb-carnes-logo-dark.jpeg";
+import slideSelecao from "@/assets/slide-selecao.jpg";
+import slideRelacionamentos from "@/assets/slide-relacionamentos.jpg";
+import slideDistribuicao from "@/assets/slide-distribuicao.jpg";
+import slideExpertise from "@/assets/slide-expertise.jpg";
+import slideQualidade from "@/assets/slide-qualidade.jpg";
 import { useEffect, useRef, useState } from "react";
 
 /* ────────────────────────────────────────────────
