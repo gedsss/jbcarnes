@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/jbcarnes/public_html
+    - /bin/cp -R dist/* $DEPLOYPATH
