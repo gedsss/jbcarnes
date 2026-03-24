@@ -809,6 +809,7 @@ const Index = () => (
     <About />
     <MissionVisionValues />
     <Services />
+    <Commitment />
     <Differentials />
     <Contact />
   </div>
