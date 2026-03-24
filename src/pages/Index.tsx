@@ -6,6 +6,7 @@ import slideSelecao from "@/assets/slide-selecao.jpg";
 import slideRelacionamentos from "@/assets/slide-relacionamentos.jpg";
 import slideDistribuicao from "@/assets/slide-distribuicao.jpg";
 import slideExpertise from "@/assets/slide-expertise.jpg";
+import slideExpertiseMobile from "@/assets/slide-expertise-mobile.jpg";
 import slideQualidade from "@/assets/slide-qualidade.jpg";
 import { useEffect, useRef, useState } from "react";
 
@@ -536,6 +537,7 @@ function Differentials() {
       overlayColor: "bg-brand-dark-brown/80",
       numberBg: "bg-brand-red",
       img: slideExpertise,
+      imgMobile: slideExpertiseMobile,
       title: "Expertise de Meio Século",
       desc: "Fundada pelo Sr. João Batista, com mais de 50 anos de experiência no setor de bovinocultura, a JB Carnes transforma conhecimento acumulado em decisões assertivas e resultados para os clientes.",
     },
@@ -561,16 +563,18 @@ function Differentials() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background photo with transition */}
-      <img
-        key={`bg-${active}`}
-        src={current.img}
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        width={1920}
-        height={1080}
-        className="absolute inset-0 w-full h-full object-cover animate-fade-in"
-      />
+      <picture key={`bg-${active}`} className="absolute inset-0 w-full h-full">
+        {current.imgMobile && (
+          <source media="(max-width: 767px)" srcSet={current.imgMobile} />
+        )}
+        <img
+          src={current.img}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="w-full h-full object-cover animate-fade-in"
+        />
+      </picture>
       {/* Color overlay — keeps brand identity */}
       <div className={`absolute inset-0 transition-colors duration-700 ${current.overlayColor}`} />
       {/* Vignette for readability */}
