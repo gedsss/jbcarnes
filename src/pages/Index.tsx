@@ -773,7 +773,7 @@ function Contact() {
               Falar pelo WhatsApp
             </a>
             <a
-              href="mailto:contato@jbcarnes.com.br"
+              href="mailto:contato@jbcarnesmt.com.br"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-hero"
             >
               <svg className="w-5 h-5 md:w-6 md:h-6 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
