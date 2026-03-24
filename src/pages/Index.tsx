@@ -512,32 +512,37 @@ function Differentials() {
 
   const slides = [
     {
-      bg: "bg-brand-red",
+      overlayColor: "bg-brand-red/75",
       numberBg: "bg-brand-dark-brown",
+      img: slideSelecao,
       title: "Seleção Criteriosa de Bovinos",
       desc: "Cada compra começa com uma análise técnica rigorosa. Selecionamos fornecedores e animais com base em critérios de qualidade, rastreabilidade e sanidade, garantindo um produto final superior para nossos clientes.",
     },
     {
-      bg: "bg-brand-dark-brown",
+      overlayColor: "bg-brand-dark-brown/80",
       numberBg: "bg-brand-red",
+      img: slideRelacionamentos,
       title: "Relacionamentos de Longo Prazo",
       desc: "Construímos parcerias sólidas e duradouras com produtores e frigoríficos de confiança em todo o território nacional, sustentadas por mais de 50 anos de atuação no setor.",
     },
     {
-      bg: "bg-brand-red",
+      overlayColor: "bg-brand-red/75",
       numberBg: "bg-brand-dark-brown",
+      img: slideDistribuicao,
       title: "Distribuição para Todo o Brasil",
       desc: "Atendemos Cuiabá e diversos estados com logística eficiente e entregas pontuais, abastecendo açougues, mercados, distribuidores e clientes institucionais com regularidade e confiança.",
     },
     {
-      bg: "bg-brand-dark-brown",
+      overlayColor: "bg-brand-dark-brown/80",
       numberBg: "bg-brand-red",
+      img: slideExpertise,
       title: "Expertise de Meio Século",
       desc: "Fundada pelo Sr. João Batista, com mais de 50 anos de experiência no setor de bovinocultura, a JB Carnes transforma conhecimento acumulado em decisões assertivas e resultados para os clientes.",
     },
     {
-      bg: "bg-brand-red",
+      overlayColor: "bg-brand-red/75",
       numberBg: "bg-brand-dark-brown",
+      img: slideQualidade,
       title: "Compromisso com Qualidade",
       desc: "Da compra do bovino até a entrega do produto, cada etapa é conduzida com responsabilidade e foco total na qualidade — porque reputação é o ativo mais valioso que construímos em mais de 13 anos de mercado.",
     },
