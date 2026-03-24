@@ -563,16 +563,18 @@ function Differentials() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background photo with transition */}
-      <img
-        key={`bg-${active}`}
-        src={current.img}
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        width={1920}
-        height={1080}
-        className="absolute inset-0 w-full h-full object-cover animate-fade-in"
-      />
+      <picture key={`bg-${active}`} className="absolute inset-0 w-full h-full">
+        {current.imgMobile && (
+          <source media="(max-width: 767px)" srcSet={current.imgMobile} />
+        )}
+        <img
+          src={current.img}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="w-full h-full object-cover animate-fade-in"
+        />
+      </picture>
       {/* Color overlay — keeps brand identity */}
       <div className={`absolute inset-0 transition-colors duration-700 ${current.overlayColor}`} />
       {/* Vignette for readability */}
