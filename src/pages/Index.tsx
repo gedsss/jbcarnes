@@ -537,6 +537,7 @@ function Differentials() {
       overlayColor: "bg-brand-dark-brown/80",
       numberBg: "bg-brand-red",
       img: slideExpertise,
+      imgMobile: slideExpertiseMobile,
       title: "Expertise de Meio Século",
       desc: "Fundada pelo Sr. João Batista, com mais de 50 anos de experiência no setor de bovinocultura, a JB Carnes transforma conhecimento acumulado em decisões assertivas e resultados para os clientes.",
     },
