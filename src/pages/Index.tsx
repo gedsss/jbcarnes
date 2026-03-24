@@ -6,6 +6,7 @@ import slideSelecao from "@/assets/slide-selecao.jpg";
 import slideRelacionamentos from "@/assets/slide-relacionamentos.jpg";
 import slideDistribuicao from "@/assets/slide-distribuicao.jpg";
 import slideExpertise from "@/assets/slide-expertise.jpg";
+import slideExpertiseMobile from "@/assets/slide-expertise-mobile.jpg";
 import slideQualidade from "@/assets/slide-qualidade.jpg";
 import { useEffect, useRef, useState } from "react";
 
