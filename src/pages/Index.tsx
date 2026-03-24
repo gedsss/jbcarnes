@@ -78,7 +78,7 @@ function Navbar() {
 
         {/* Desktop CTA */}
         <a
-          href="https://wa.me/5565999999999"
+          href="https://wa.me/5565999978325"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden md:flex items-center gap-2 bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold text-sm px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-hero"
@@ -121,7 +121,7 @@ function Navbar() {
               </button>
             ))}
             <a
-              href="https://wa.me/5565999999999"
+              href="https://wa.me/5565999978325"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 flex items-center justify-center gap-2 bg-brand-red text-primary-foreground font-body font-bold text-sm px-5 py-3 rounded-full"
@@ -486,7 +486,7 @@ function Services() {
             </p>
           </div>
           <a
-            href="https://wa.me/5565999999999"
+            href="https://wa.me/5565999978325"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full md:w-auto text-center shrink-0 bg-brand-red hover:bg-brand-red/90 text-primary-foreground font-body font-bold px-8 py-4 rounded-full transition-all duration-300 hover:shadow-hero"
@@ -679,15 +679,6 @@ function Commitment() {
     {
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
-        </svg>
-      ),
-      title: "Conformidade Bancária",
-      desc: "Atuamos em total alinhamento com a SARB nº 026/2023, facilitando o acesso ao crédito e garantindo segurança jurídica aos parceiros.",
-    },
-    {
-      icon: (
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M7.864 4.243A7.5 7.5 0 0119.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 004.5 10.5a7.464 7.464 0 01-1.15 3.993m1.989 3.559A11.209 11.209 0 008.25 10.5a3.75 3.75 0 117.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 01-3.6 9.75m6.633-4.596a18.666 18.666 0 01-2.485 5.33" />
         </svg>
       ),
@@ -762,7 +753,7 @@ function Contact() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
             <a
-              href="https://wa.me/5565999999999"
+              href="https://wa.me/5565999978325"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20b858] text-primary-foreground font-body font-bold text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-hero"
