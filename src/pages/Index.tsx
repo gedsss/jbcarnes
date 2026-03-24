@@ -2,6 +2,11 @@ import heroMeat from "@/assets/hero-meat.jpg";
 import cattleFarm from "@/assets/cattle-farm.jpg";
 import logoRed from "@/assets/jb-carnes-logo-red.jpeg";
 import logoDark from "@/assets/jb-carnes-logo-dark.jpeg";
+import slideSelecao from "@/assets/slide-selecao.jpg";
+import slideRelacionamentos from "@/assets/slide-relacionamentos.jpg";
+import slideDistribuicao from "@/assets/slide-distribuicao.jpg";
+import slideExpertise from "@/assets/slide-expertise.jpg";
+import slideQualidade from "@/assets/slide-qualidade.jpg";
 import { useEffect, useRef, useState } from "react";
 
 /* ────────────────────────────────────────────────
@@ -507,32 +512,37 @@ function Differentials() {
 
   const slides = [
     {
-      bg: "bg-brand-red",
+      overlayColor: "bg-brand-red/75",
       numberBg: "bg-brand-dark-brown",
+      img: slideSelecao,
       title: "Seleção Criteriosa de Bovinos",
       desc: "Cada compra começa com uma análise técnica rigorosa. Selecionamos fornecedores e animais com base em critérios de qualidade, rastreabilidade e sanidade, garantindo um produto final superior para nossos clientes.",
     },
     {
-      bg: "bg-brand-dark-brown",
+      overlayColor: "bg-brand-dark-brown/80",
       numberBg: "bg-brand-red",
+      img: slideRelacionamentos,
       title: "Relacionamentos de Longo Prazo",
       desc: "Construímos parcerias sólidas e duradouras com produtores e frigoríficos de confiança em todo o território nacional, sustentadas por mais de 50 anos de atuação no setor.",
     },
     {
-      bg: "bg-brand-red",
+      overlayColor: "bg-brand-red/75",
       numberBg: "bg-brand-dark-brown",
+      img: slideDistribuicao,
       title: "Distribuição para Todo o Brasil",
       desc: "Atendemos Cuiabá e diversos estados com logística eficiente e entregas pontuais, abastecendo açougues, mercados, distribuidores e clientes institucionais com regularidade e confiança.",
     },
     {
-      bg: "bg-brand-dark-brown",
+      overlayColor: "bg-brand-dark-brown/80",
       numberBg: "bg-brand-red",
+      img: slideExpertise,
       title: "Expertise de Meio Século",
       desc: "Fundada pelo Sr. João Batista, com mais de 50 anos de experiência no setor de bovinocultura, a JB Carnes transforma conhecimento acumulado em decisões assertivas e resultados para os clientes.",
     },
     {
-      bg: "bg-brand-red",
+      overlayColor: "bg-brand-red/75",
       numberBg: "bg-brand-dark-brown",
+      img: slideQualidade,
       title: "Compromisso com Qualidade",
       desc: "Da compra do bovino até a entrega do produto, cada etapa é conduzida com responsabilidade e foco total na qualidade — porque reputação é o ativo mais valioso que construímos em mais de 13 anos de mercado.",
     },
@@ -549,17 +559,22 @@ function Differentials() {
   const displayNumber = String(active + 1).padStart(2, "0");
 
   return (
-    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-700 ${current.bg}`}>
-      {/* Subtle dot texture */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-primary-foreground"
-            style={{ left: `${(i * 37) % 100}%`, top: `${(i * 53) % 100}%`, opacity: 0.4 }}
-          />
-        ))}
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background photo with transition */}
+      <img
+        key={`bg-${active}`}
+        src={current.img}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        width={1920}
+        height={1080}
+        className="absolute inset-0 w-full h-full object-cover animate-fade-in"
+      />
+      {/* Color overlay — keeps brand identity */}
+      <div className={`absolute inset-0 transition-colors duration-700 ${current.overlayColor}`} />
+      {/* Vignette for readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 max-w-2xl mx-auto py-28 md:py-32">
