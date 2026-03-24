@@ -559,17 +559,22 @@ function Differentials() {
   const displayNumber = String(active + 1).padStart(2, "0");
 
   return (
-    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-700 ${current.bg}`}>
-      {/* Subtle dot texture */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-primary-foreground"
-            style={{ left: `${(i * 37) % 100}%`, top: `${(i * 53) % 100}%`, opacity: 0.4 }}
-          />
-        ))}
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background photo with transition */}
+      <img
+        key={`bg-${active}`}
+        src={current.img}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        width={1920}
+        height={1080}
+        className="absolute inset-0 w-full h-full object-cover animate-fade-in"
+      />
+      {/* Color overlay — keeps brand identity */}
+      <div className={`absolute inset-0 transition-colors duration-700 ${current.overlayColor}`} />
+      {/* Vignette for readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 max-w-2xl mx-auto py-28 md:py-32">
