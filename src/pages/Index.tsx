@@ -251,7 +251,7 @@ function About() {
             </div>
             {/* Floating badge */}
             <div className="absolute -bottom-5 -right-3 md:-bottom-6 md:-right-6 bg-brand-red rounded-2xl p-4 md:p-6 shadow-hero">
-              <p className="font-display text-3xl md:text-4xl font-bold text-primary-foreground">13+</p>
+              <p className="font-display text-3xl md:text-4xl font-bold text-primary-foreground">+13</p>
               <p className="font-body text-primary-foreground/80 text-xs md:text-sm">anos no<br />mercado</p>
             </div>
             {/* Decorative */}
