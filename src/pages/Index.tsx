@@ -9,6 +9,7 @@ import slideExpertise from "@/assets/slide-expertise.jpg";
 import slideExpertiseMobile from "@/assets/slide-expertise-mobile.jpg";
 import slideQualidade from "@/assets/slide-qualidade.jpg";
 import { useEffect, useRef, useState } from "react";
+import { Award, Handshake, MapPin, Briefcase } from "lucide-react";
 
 /* ────────────────────────────────────────────────
    Intersection Observer hook for scroll animations
