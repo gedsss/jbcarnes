@@ -380,18 +380,18 @@ function MissionVisionValues() {
               )}
 
               {card.values && (
-                <ul className="w-full text-left space-y-3 mt-1">
+                <div className="w-full grid grid-cols-2 gap-2 mt-1">
                   {card.values.map((v) => (
-                    <li key={v} className="flex items-center gap-3 font-body text-foreground/80 text-sm md:text-base">
-                      <span className="w-6 h-6 rounded-full bg-brand-red flex items-center justify-center shrink-0">
-                        <svg className="w-3.5 h-3.5 text-primary-foreground" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                    <div key={v} className="flex items-center gap-2 font-body text-foreground/80 text-sm">
+                      <span className="w-5 h-5 rounded-full bg-brand-red flex items-center justify-center shrink-0">
+                        <svg className="w-3 h-3 text-primary-foreground" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                         </svg>
                       </span>
                       {v}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               )}
             </div>
           ))}
