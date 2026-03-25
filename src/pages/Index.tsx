@@ -339,7 +339,7 @@ function MissionVisionValues() {
         </svg>
       ),
       title: "Nossos Valores",
-      values: ["Determinação", "Honestidade", "Qualidade", "Confiança", "Foco no Cliente"],
+      values: ["Determinação", "Honestidade", "Qualidade", "Confiança", "Foco no Cliente", "Tradição"],
     },
   ];
 
