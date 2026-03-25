@@ -280,10 +280,10 @@ function About() {
             {/* Values */}
             <div className="grid grid-cols-2 gap-3 md:gap-4">
               {[
-                { icon: "🏅", title: "Qualidade", desc: "Seleção rigorosa dos melhores bovinos" },
-                { icon: "🤝", title: "Confiança", desc: "Relacionamentos sólidos e duradouros" },
-                { icon: "🌎", title: "Alcance", desc: "Distribuição para múltiplos estados" },
-                { icon: "📦", title: "Experiência", desc: "+50 anos de expertise no segmento" },
+                { icon: "Award", title: "Qualidade", desc: "Seleção rigorosa dos melhores bovinos" },
+                { icon: "Handshake", title: "Confiança", desc: "Relacionamentos sólidos e duradouros" },
+                { icon: "MapPin", title: "Alcance", desc: "Distribuição para múltiplos estados" },
+                { icon: "Briefcase", title: "Experiência", desc: "+50 anos de expertise no segmento" },
               ].map((v) => (
                 <div key={v.title} className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl shadow-card">
                   <span className="text-xl md:text-2xl mt-0.5">{v.icon}</span>
