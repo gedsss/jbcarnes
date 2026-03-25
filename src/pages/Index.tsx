@@ -9,6 +9,7 @@ import slideExpertise from "@/assets/slide-expertise.jpg";
 import slideExpertiseMobile from "@/assets/slide-expertise-mobile.jpg";
 import slideQualidade from "@/assets/slide-qualidade.jpg";
 import { useEffect, useRef, useState } from "react";
+import { Award, Handshake, MapPin, Briefcase } from "lucide-react";
 
 /* ────────────────────────────────────────────────
    Intersection Observer hook for scroll animations
@@ -280,13 +281,15 @@ function About() {
             {/* Values */}
             <div className="grid grid-cols-2 gap-3 md:gap-4">
               {[
-                { icon: "🏅", title: "Qualidade", desc: "Seleção rigorosa dos melhores bovinos" },
-                { icon: "🤝", title: "Confiança", desc: "Relacionamentos sólidos e duradouros" },
-                { icon: "🌎", title: "Alcance", desc: "Distribuição para múltiplos estados" },
-                { icon: "📦", title: "Experiência", desc: "+50 anos de expertise no segmento" },
+                { Icon: Award, title: "Qualidade", desc: "Seleção rigorosa dos melhores bovinos" },
+                { Icon: Handshake, title: "Confiança", desc: "Relacionamentos sólidos e duradouros" },
+                { Icon: MapPin, title: "Alcance", desc: "Distribuição para múltiplos estados" },
+                { Icon: Briefcase, title: "Experiência", desc: "+50 anos de expertise no segmento" },
               ].map((v) => (
                 <div key={v.title} className="flex items-start gap-3 p-3 md:p-4 bg-card rounded-xl shadow-card">
-                  <span className="text-xl md:text-2xl mt-0.5">{v.icon}</span>
+                  <div className="mt-0.5 p-1.5 rounded-lg bg-brand-red/10 text-brand-red shrink-0">
+                    <v.Icon size={18} strokeWidth={1.5} />
+                  </div>
                   <div>
                     <p className="font-body font-bold text-brand-brown text-sm">{v.title}</p>
                     <p className="font-body text-muted-foreground text-xs mt-0.5">{v.desc}</p>
