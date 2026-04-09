@@ -904,6 +904,7 @@ const Index = () => (
   <div className="min-h-screen font-body">
     <Navbar />
     <Hero />
+    <CabecasPorMes />
     <About />
     <MissionVisionValues />
     <Services />
