@@ -245,10 +245,10 @@ function CabecasPorMes() {
         className={`relative z-10 h-full flex items-center justify-center container mx-auto px-4 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
       >
         <div className="text-center">
-          <p className="font-display text-6xl md:text-8xl font-bold text-primary-foreground leading-none drop-shadow-lg">
+          <p className="font-display text-6xl md:text-8xl font-bold text-brand-beige leading-none drop-shadow-lg">
             11.780
           </p>
-          <p className="font-body text-primary-foreground/90 text-sm md:text-lg uppercase tracking-widest mt-3 font-semibold">
+          <p className="font-body text-brand-beige text-sm md:text-lg uppercase tracking-widest mt-3 font-semibold">
             Cabeças de Gado em Média por Mês
           </p>
         </div>
