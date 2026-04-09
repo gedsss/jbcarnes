@@ -239,7 +239,7 @@ function CabecasPorMes() {
         alt="Processamento de carnes JB Carnes"
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-brand-red/70" />
+      <div className="absolute inset-0 bg-brand-dark-brown/70" />
       <div
         ref={ref}
         className={`relative z-10 h-full flex items-center justify-center container mx-auto px-4 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
@@ -249,7 +249,7 @@ function CabecasPorMes() {
             11.780
           </p>
           <p className="font-body text-primary-foreground/90 text-sm md:text-lg uppercase tracking-widest mt-3 font-semibold">
-            Cabeças por Mês
+            Cabeças em Média por Mês
           </p>
         </div>
       </div>
