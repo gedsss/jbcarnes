@@ -249,7 +249,7 @@ function CabecasPorMes() {
             11.780
           </p>
           <p className="font-body text-primary-foreground/90 text-sm md:text-lg uppercase tracking-widest mt-3 font-semibold">
-            Cabeças em Média por Mês
+            Cabeças de Gado em Média por Mês
           </p>
         </div>
       </div>
