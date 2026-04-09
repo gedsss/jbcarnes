@@ -746,6 +746,60 @@ function Commitment() {
             </div>
           ))}
         </div>
+
+        {/* Indicadores de Rastreabilidade */}
+        <div className={`mt-12 md:mt-16 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "600ms" }}>
+          <h3 className="font-display text-xl md:text-2xl text-brand-brown font-bold text-center mb-8">
+            Indicadores de <span className="text-brand-red">Rastreabilidade</span>
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+            {[
+              {
+                value: "100%",
+                label: "Fornecedores Diretos",
+                desc: "Cabeças de gado abatidas rastreadas e monitoradas até os fornecedores diretos",
+                audited: true,
+              },
+              {
+                value: "100%",
+                label: "Fornecedores Indiretos",
+                desc: "Cabeças de gado abatidas rastreadas e monitoradas até os fornecedores indiretos",
+                audited: true,
+              },
+              {
+                value: "100%",
+                label: "Cumprimento Integral",
+                desc: "Cabeças de gado abatidas em cumprimento integral com o compromisso, cobrindo diretos e indiretos",
+                audited: true,
+              },
+              {
+                value: "✓",
+                label: "Auditoria por Terceiros",
+                desc: "Todos os indicadores são auditados por terceira parte independente",
+                audited: true,
+              },
+            ].map((item, i) => (
+              <div
+                key={item.label}
+                className="bg-card rounded-2xl p-5 md:p-6 text-center shadow-card border border-border hover:-translate-y-1 hover:shadow-hero transition-all duration-300"
+              >
+                <div className="text-3xl md:text-4xl font-display font-bold text-brand-red mb-2">
+                  {item.value}
+                </div>
+                <h4 className="font-display text-sm md:text-base text-brand-brown font-bold mb-2">{item.label}</h4>
+                <p className="font-body text-muted-foreground text-xs leading-relaxed">{item.desc}</p>
+                {item.audited && (
+                  <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    Auditado
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
