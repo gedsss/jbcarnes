@@ -235,7 +235,7 @@ function CabecasPorMes() {
   return (
     <section className="relative h-[340px] sm:h-[400px] md:h-[450px] overflow-hidden">
       <img
-        src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&q=80"
+        src="https://images.pexels.com/photos/7163991/pexels-photo-7163991.jpeg?auto=compress&cs=tinysrgb&w=1200"
         alt="Processamento de carnes JB Carnes"
         className="absolute inset-0 w-full h-full object-cover"
       />
